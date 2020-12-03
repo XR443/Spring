@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="testingSystemService"
+          class="com.github.hardlolmaster.module1.homework.services.CommandLineTestingSystemServiceImpl">
+        <property name="loginService" ref="loginService"/>
+        <property name="questionService" ref="questionService"/>
+        <property name="testingService" ref="testingService"/>
+    </bean>
+
+    <bean id="loginService" class="com.github.hardlolmaster.module1.homework.dao.LoginServiceImpl"/>
+    <bean id="questionService" class="com.github.hardlolmaster.module1.homework.dao.CsvFileQuestionService">
+        <property name="filePath" value="src/test/resources/module1/homework/test/test.csv"/>
+    </bean>
+    <bean id="testingService" class="com.github.hardlolmaster.module1.homework.services.TestingServiceImpl"/>
+</beans>
