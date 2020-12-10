@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface IQuestionService {
 
+    List<Question> regenerate();
     List<Question> getQuestions();
 }

@@ -15,13 +15,14 @@ import java.util.List;
 public class CsvFileQuestionService implements IQuestionService {
 
     private String filePath;
+    private List<Question> questions;
 
     public CsvFileQuestionService(Properties properties) {
         this.filePath = properties.getCsv().getPath();
     }
 
     @Override
-    public List<Question> getQuestions() {
+    public List<Question> regenerate() {
         File file = new File(filePath);
 
         List<Question> result = new ArrayList<>();
@@ -41,8 +42,13 @@ public class CsvFileQuestionService implements IQuestionService {
         } catch (Throwable e) {
             e.printStackTrace();
         }
-
+        questions = result;
         return result;
+    }
+
+    @Override
+    public List<Question> getQuestions() {
+        return questions;
     }
 
     public void setFilePath(String filePath) {

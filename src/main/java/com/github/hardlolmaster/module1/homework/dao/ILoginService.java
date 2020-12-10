@@ -4,6 +4,9 @@ import com.github.hardlolmaster.module1.homework.domain.Student;
 
 public interface ILoginService {
 
-    Student login(String name, String lastName);
+    void login(String name, String lastName);
 
+    void logout();
+
+    Student getCurrentStudent();
 }

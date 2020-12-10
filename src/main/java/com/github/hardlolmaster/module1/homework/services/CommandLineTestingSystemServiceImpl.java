@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
-@Service
+@Service(value = "commandLineTestSystem")
 public class CommandLineTestingSystemServiceImpl implements ITestingSystemService {
 
     private ILoginService loginService;
@@ -39,13 +39,13 @@ public class CommandLineTestingSystemServiceImpl implements ITestingSystemServic
         System.out.print("Enter your last name: ");
         String lastName = scanner.next();
         System.out.println();
-
-        Student student = loginService.login(name, lastName);
+        loginService.login(name, lastName);
+        Student student = loginService.getCurrentStudent();
 
         List<Question> questions = questionService.getQuestions();
 
         for (Question question : questions) {
-            System.out.println(question.getNumber() + ". "+ messageSource.getMessage("question." + question.getNumber(),
+            System.out.println(question.getNumber() + ". " + messageSource.getMessage("question." + question.getNumber(),
                     null,
                     Locale.ENGLISH));
 //            System.out.println(question.getNumber() + ". " + question.getQuestion());
@@ -60,6 +60,31 @@ public class CommandLineTestingSystemServiceImpl implements ITestingSystemServic
         int mark = testingService.checkStudentAnswer(questions);
 
         System.out.println(student.getName() + " " + student.getLastName() + " your mark for the test " + mark);
+    }
+
+    @Override
+    public void stopTesting() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void getQuestion() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void answer(int number) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int getResult() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isStopped() {
+        throw new UnsupportedOperationException();
     }
 
     public void setLoginService(ILoginService loginService) {

@@ -13,8 +13,8 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 public class TestServiceMain {
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(TestServiceMain.class);
-        ITestingSystemService testingSystem = context.getBean(CommandLineTestingSystemServiceImpl.class);
-        testingSystem.startTesting();
+//        ITestingSystemService testingSystem = context.getBean(CommandLineTestingSystemServiceImpl.class);
+//        testingSystem.startTesting();
     }
 
     @Bean
