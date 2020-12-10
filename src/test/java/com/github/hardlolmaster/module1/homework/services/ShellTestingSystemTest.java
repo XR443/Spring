@@ -34,10 +34,15 @@ public class ShellTestingSystemTest extends TestCase {
 
     @TestConfiguration
     static class ShellTestingSystemTestConfiguration {
-        public IQuestionService questionService() {
-            Properties properties = new Properties();
+        Properties properties = new Properties();
+
+        {
             properties.setCsv(new Properties.Csv());
             properties.getCsv().setPath("src/test/resources/module1/homework/test/test.csv");
+            properties.setLocale("en");
+        }
+
+        public IQuestionService questionService() {
             return new CsvFileQuestionService(properties);
         }
 
@@ -47,7 +52,7 @@ public class ShellTestingSystemTest extends TestCase {
 
         @Bean
         public ITestingSystemService testingSystemService() {
-            return new ShellTestingSystemServiceImpl(questionService(), testingService(), null);
+            return new ShellTestingSystemServiceImpl(questionService(), testingService(), null, properties);
         }
     }
 }

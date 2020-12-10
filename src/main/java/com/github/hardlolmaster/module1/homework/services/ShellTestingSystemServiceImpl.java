@@ -1,5 +1,6 @@
 package com.github.hardlolmaster.module1.homework.services;
 
+import com.github.hardlolmaster.module1.homework.Properties;
 import com.github.hardlolmaster.module1.homework.dao.IQuestionService;
 import com.github.hardlolmaster.module1.homework.domain.Question;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +15,18 @@ public class ShellTestingSystemServiceImpl implements ITestingSystemService {
     private final IQuestionService questionService;
     private final ITestingService testingService;
     private final MessageSource messageSource;
+    private final Properties properties;
     private int currentQuestion = -1;
 
     @Autowired
     public ShellTestingSystemServiceImpl(IQuestionService questionService,
                                          ITestingService testingService,
-                                         MessageSource messageSource) {
+                                         MessageSource messageSource,
+                                         Properties properties) {
         this.questionService = questionService;
         this.testingService = testingService;
         this.messageSource = messageSource;
+        this.properties = properties;
     }
 
     @Override
@@ -48,7 +52,7 @@ public class ShellTestingSystemServiceImpl implements ITestingSystemService {
             System.out.println(question.getNumber() + ". " +
                     "" + messageSource.getMessage("question." + question().getNumber(),
                     null,
-                    Locale.ENGLISH));
+                    new Locale(properties.getLocale())));
             for (int i = 0; i < question().getAnswers().size(); i++) {
                 System.out.println((i + 1) + ". " + question().getAnswers().get(i));
             }

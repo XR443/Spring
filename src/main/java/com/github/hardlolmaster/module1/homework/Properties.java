@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("test-system")
 public class Properties {
     private Csv csv;
+    private String locale = "en";
 
     public Csv getCsv() {
         return csv;
@@ -14,6 +15,14 @@ public class Properties {
 
     public void setCsv(Csv csv) {
         this.csv = csv;
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
     }
 
     public static class Csv {

@@ -58,7 +58,7 @@ public class Commands {
         System.out.println("Use 'result' for see results");
     }
 
-    @ShellMethod(value = "Question", key = {"question"})
+    @ShellMethod(value = "Question", key = {"question", "q"})
     public void question() {
         if (isNotStarted()) return;
         testingSystemService.getQuestion();

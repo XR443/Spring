@@ -1,3 +1,4 @@
 test-system:
   csv:
     path: 'src/main/resources/module1/homework/test/test.csv'
+  locale: 'ru'
