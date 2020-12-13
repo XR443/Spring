@@ -20,11 +20,15 @@ public class LoginServiceImplTest {
 
     @Test
     public void testLogin() {
-        loginService.login("Name", "LastName");
+        String name = "Name";
+        String lastName = "LastName";
+
+        loginService.login(name, lastName);
         Student student = loginService.getCurrentStudent();
         assertNotNull(student);
-        assertEquals("Name", student.getName());
-        assertEquals("LastName", student.getLastName());
+        assertEquals(name, student.getName());
+        assertEquals(lastName, student.getLastName());
+
         loginService.logout();
         student = loginService.getCurrentStudent();
         assertNull(student);

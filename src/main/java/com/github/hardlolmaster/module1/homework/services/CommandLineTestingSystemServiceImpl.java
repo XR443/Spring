@@ -73,7 +73,7 @@ public class CommandLineTestingSystemServiceImpl implements ITestingSystemServic
     }
 
     @Override
-    public void answer(int number) {
+    public int answer(int number) {
         throw new UnsupportedOperationException();
     }
 

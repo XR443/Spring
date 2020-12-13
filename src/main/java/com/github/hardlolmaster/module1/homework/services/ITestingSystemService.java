@@ -7,7 +7,7 @@ public interface ITestingSystemService {
 
     void getQuestion();
 
-    void answer(int number);
+    int answer(int number);
 
     int getResult();
 

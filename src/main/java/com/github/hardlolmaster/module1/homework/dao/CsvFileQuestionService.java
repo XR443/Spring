@@ -48,6 +48,9 @@ public class CsvFileQuestionService implements IQuestionService {
 
     @Override
     public List<Question> getQuestions() {
+        if (questions == null) {
+            questions = new ArrayList<>();
+        }
         return questions;
     }
 

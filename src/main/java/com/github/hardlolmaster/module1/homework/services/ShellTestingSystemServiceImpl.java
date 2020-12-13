@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+
+import static java.util.Objects.requireNonNull;
 
 @Service(value = "shellLineTestSystem")
 public class ShellTestingSystemServiceImpl implements ITestingSystemService {
@@ -63,13 +66,16 @@ public class ShellTestingSystemServiceImpl implements ITestingSystemService {
     }
 
     @Override
-    public void answer(int number) {
+    public int answer(int number) {
         if (isStopped()) {
-            System.out.println("Testing stopped");
-            return;
+            return -2;
         }
-        question().setAnswer(number);
+        if (question() == null) {
+            return -1;
+        }
+        requireNonNull(question()).setAnswer(number);
         currentQuestion += 1;
+        return 0;
     }
 
     @Override

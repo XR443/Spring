@@ -8,7 +8,6 @@ import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -22,10 +21,16 @@ public class CsvFileQuestionServiceTest extends TestCase {
 
     @Test
     public void testGetQuestions() {
-        List<Question> list = service.regenerate();
+        List<Question> list;
+        list = service.getQuestions();
+        assertEquals(0, list.size());
+        list = service.regenerate();
         assertEquals(5, list.size());
         list = service.getQuestions();
         assertEquals(5, list.size());
+        service.getQuestions().clear();
+        list = service.getQuestions();
+        assertEquals(0, list.size());
     }
 
     @TestConfiguration
@@ -33,7 +38,6 @@ public class CsvFileQuestionServiceTest extends TestCase {
         @Bean
         public IQuestionService questionService() {
             Properties properties = new Properties();
-            properties.setCsv(new Properties.Csv());
             properties.getCsv().setPath("src/test/resources/module1/homework/test/test.csv");
             return new CsvFileQuestionService(properties);
         }

@@ -67,14 +67,19 @@ public class Commands {
     @ShellMethod(value = "Answer command", key = {"answer"})
     public void answer(@ShellOption int number) {
         if (isNotStarted()) return;
-        testingSystemService.answer(number);
+        int answerResultCode = testingSystemService.answer(number);
+        if (-1 == answerResultCode) {
+            System.out.println("Question for answer not found");
+        } else if (-2 == answerResultCode) {
+            System.out.println("Testing stopped");
+        }
         System.out.println("Next question is ready");
         System.out.println("Use 'question' for next question");
     }
 
     @ShellMethod(value = "Result command", key = {"result"})
     public void result() {
-        if(testingSystemService.getResult()==-1){
+        if (testingSystemService.getResult() == -1) {
             System.out.println("Stop testing first");
             return;
         }

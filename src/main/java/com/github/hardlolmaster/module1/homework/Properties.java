@@ -10,6 +10,8 @@ public class Properties {
     private String locale = "en";
 
     public Csv getCsv() {
+        if (csv == null)
+            csv = new Csv();
         return csv;
     }
 
