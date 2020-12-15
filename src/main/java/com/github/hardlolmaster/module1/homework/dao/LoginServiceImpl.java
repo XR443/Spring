@@ -9,12 +9,12 @@ public class LoginServiceImpl implements ILoginService {
     private Student currentStudent;
 
     @Override
-    public void login(String name, String lastName) {
+    public int login(String name, String lastName) {
         if (currentStudent != null) {
-            System.out.println("LOGOUT FIRST");
-            return;
+            return -1;
         }
         currentStudent = new Student(name, lastName);
+        return 0;
     }
 
     @Override

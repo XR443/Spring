@@ -25,9 +25,12 @@ public class Commands {
 
     @ShellMethod(value = "LogIn command", key = {"login"})
     public void login(@ShellOption() String name, @ShellOption String surname) {
-        loginService.login(name, surname);
-        System.out.println("Welcome " + name + " " + surname);
-        System.out.println("Use 'start' for start testing");
+        if (-1 == loginService.login(name, surname)) {
+            System.out.println("LOGOUT FIRST");
+        } else {
+            System.out.println("Welcome " + name + " " + surname);
+            System.out.println("Use 'start' for start testing");
+        }
     }
 
     @ShellMethod(value = "LogOut command", key = {"logout"})
@@ -61,7 +64,14 @@ public class Commands {
     @ShellMethod(value = "Question", key = {"question", "q"})
     public void question() {
         if (isNotStarted()) return;
-        testingSystemService.getQuestion();
+        int question = testingSystemService.getQuestion();
+        if (question == -1) {
+            System.out.println("Testing stopped");
+        } else if (question == -2) {
+            System.out.println("The questions are over");
+        } else {
+            System.out.println("Use 'stop' for end testing");
+        }
     }
 
     @ShellMethod(value = "Answer command", key = {"answer"})
@@ -72,9 +82,10 @@ public class Commands {
             System.out.println("Question for answer not found");
         } else if (-2 == answerResultCode) {
             System.out.println("Testing stopped");
+        } else {
+            System.out.println("Next question is ready");
+            System.out.println("Use 'question' for next question");
         }
-        System.out.println("Next question is ready");
-        System.out.println("Use 'question' for next question");
     }
 
     @ShellMethod(value = "Result command", key = {"result"})

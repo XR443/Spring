@@ -5,7 +5,7 @@ public interface ITestingSystemService {
 
     void stopTesting();
 
-    void getQuestion();
+    int getQuestion();
 
     int answer(int number);
 

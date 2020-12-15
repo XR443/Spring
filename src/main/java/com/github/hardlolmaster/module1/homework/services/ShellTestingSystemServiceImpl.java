@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
 
@@ -45,10 +44,9 @@ public class ShellTestingSystemServiceImpl implements ITestingSystemService {
     }
 
     @Override
-    public void getQuestion() {
+    public int getQuestion() {
         if (isStopped()) {
-            System.out.println("Testing stopped");
-            return;
+            return -1;
         }
         Question question = question();
         if (question != null) {
@@ -60,9 +58,9 @@ public class ShellTestingSystemServiceImpl implements ITestingSystemService {
                 System.out.println((i + 1) + ". " + question().getAnswers().get(i));
             }
         } else {
-            System.out.println("The questions are over");
+            return -2;
         }
-        System.out.println("Use 'stop' for end testing");
+        return 0;
     }
 
     @Override

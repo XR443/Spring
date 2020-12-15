@@ -6,7 +6,6 @@ import com.github.hardlolmaster.module1.homework.domain.Student;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -23,11 +22,15 @@ public class LoginServiceImplTest {
         String name = "Name";
         String lastName = "LastName";
 
-        loginService.login(name, lastName);
+        int login = loginService.login(name, lastName);
+        assertEquals(0, login);
         Student student = loginService.getCurrentStudent();
         assertNotNull(student);
         assertEquals(name, student.getName());
         assertEquals(lastName, student.getLastName());
+
+        login = loginService.login(name, lastName);
+        assertEquals(-1, login);
 
         loginService.logout();
         student = loginService.getCurrentStudent();
