@@ -53,9 +53,14 @@ dependencies {
 
     compile 'org.springframework.shell:spring-shell-starter:2.0.0.RELEASE'
 
+    compile 'org.projectlombok:lombok:' + project.property('lombok.version')
+    annotationProcessor 'org.projectlombok:lombok:' + project.property('lombok.version')
+
+    testCompileOnly 'org.projectlombok:lombok:' + project.property('lombok.version')
+    testAnnotationProcessor 'org.projectlombok:lombok:' + project.property('lombok.version')
 }
 
 application {
     // Define the main class for the application.
-    mainClassName = 'com.github.hardlolmaster.App'
+    mainClassName = 'com.github.hardlolmaster.module1.homework.TestServiceMain'
 }
