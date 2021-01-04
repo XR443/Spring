@@ -34,7 +34,7 @@ public class CommandLineTestingSystemServiceImpl implements ITestingSystemServic
     @Override
     public void startTesting() {
         viewService.greetings();
-        Scanner scanner = new Scanner(new FilterInputStream(System.in){
+        Scanner scanner = new Scanner(new FilterInputStream(System.in) {
             @Override
             public void close() throws IOException {
             }
