@@ -41,11 +41,11 @@ public class AuthorDao implements IDao<Author> {
 
     @Override
     public void update(Author obj) {
-        Map<String, Object> params = new HashMap<>(4);
+        Map<String, Object> params = new HashMap<>(3);
         params.put("id", obj.getId());
         params.put("name", obj.getName());
         params.put("lastname", obj.getLastName());
-        jdbc.update("update authors set name = :name, lastname =:lastname, where id = :id", params);
+        jdbc.update("update authors set name = :name, lastname = :lastname where id = :id", params);
     }
 
     @Override

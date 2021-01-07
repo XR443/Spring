@@ -4,4 +4,4 @@ includeFlat 'module2'
 
 include 'module2:module2.homework1'
 project(':module2:module2.homework1').projectDir = new File('../module2.homework1')
-project(':module2:module2.homework1').name = 'Spring.module2.homework1'
+project(':module2:module2.homework1').name = 'module2.homework1'

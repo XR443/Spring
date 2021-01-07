@@ -10,6 +10,6 @@ import java.io.Serializable;
 public class Book implements Serializable {
     private Long id;
     private String name;
-    private Long genre;
-    private Long author;
+    private Genre genre;
+    private Author author;
 }

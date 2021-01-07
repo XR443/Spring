@@ -1,7 +1,7 @@
 package com.github.hardlolmaster.module2.homework1.shell;
 
-import com.github.hardlolmaster.module2.homework1.domain.Book;
 import com.github.hardlolmaster.module2.homework1.dao.BookDao;
+import com.github.hardlolmaster.module2.homework1.domain.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -20,7 +20,7 @@ public class BookCommands {
     @ShellMethod(value = "Insert book", key = "insert-book")
     public void insertBook(@ShellOption long id,
                            @ShellOption String name) {
-        bookDao.insert(new Book(id, name, GenreCommands.getGenre().getId(), AuthorCommands.getAuthor().getId()));
+        bookDao.insert(new Book(id, name, GenreCommands.getGenre(), AuthorCommands.getAuthor()));
     }
 
     @ShellMethod(value = "Get all books", key = "get-all-book")

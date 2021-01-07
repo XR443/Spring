@@ -38,3 +38,7 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:' + project.property('lombok.version')
     testAnnotationProcessor 'org.projectlombok:lombok:' + project.property('lombok.version')
 }
+
+test {
+    useJUnit()
+}

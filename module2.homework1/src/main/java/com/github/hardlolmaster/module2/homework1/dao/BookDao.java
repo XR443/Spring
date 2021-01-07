@@ -19,11 +19,15 @@ import static java.util.Collections.singletonMap;
 @Repository
 public class BookDao implements IDao<Book> {
     private final NamedParameterJdbcOperations jdbc;
+    private final GenreDao genreDao;
+    private final AuthorDao authorDao;
     private final BookMapper mapper = new BookMapper();
 
     @Autowired
-    public BookDao(NamedParameterJdbcOperations jdbc) {
+    public BookDao(NamedParameterJdbcOperations jdbc, GenreDao genreDao, AuthorDao authorDao) {
         this.jdbc = jdbc;
+        this.genreDao = genreDao;
+        this.authorDao = authorDao;
     }
 
     @Override
@@ -37,8 +41,8 @@ public class BookDao implements IDao<Book> {
         Map<String, Object> params = new HashMap<>(4);
         params.put("id", obj.getId());
         params.put("name", obj.getName());
-        params.put("genre", obj.getGenre());
-        params.put("author", obj.getAuthor());
+        params.put("genre", obj.getGenre().getId());
+        params.put("author", obj.getAuthor().getId());
         jdbc.update("insert into books (id, name, genre, author) values (:id, :name, :genre, :author)", params);
     }
 
@@ -47,8 +51,8 @@ public class BookDao implements IDao<Book> {
         Map<String, Object> params = new HashMap<>(4);
         params.put("id", obj.getId());
         params.put("name", obj.getName());
-        params.put("genre", obj.getGenre());
-        params.put("author", obj.getAuthor());
+        params.put("genre", obj.getGenre().getId());
+        params.put("author", obj.getAuthor().getId());
         jdbc.update("update books set name = :name, genre = :genre, author = :author where id = :id", params);
     }
 
@@ -63,13 +67,13 @@ public class BookDao implements IDao<Book> {
         return jdbc.query("select * from books", mapper);
     }
 
-    private static class BookMapper implements RowMapper<Book> {
+    private class BookMapper implements RowMapper<Book> {
         @Override
         public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
             long id = rs.getLong("id");
             String name = rs.getString("name");
-            Long genre = (Long) rs.getObject("genre");
-            Long author = (Long) rs.getObject("author");
+            Genre genre = genreDao.findById((Long) rs.getObject("genre"));
+            Author author = authorDao.findById((Long) rs.getObject("author"));
             return new Book(id, name, genre, author);
         }
     }

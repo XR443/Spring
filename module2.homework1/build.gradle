@@ -10,29 +10,21 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    // This dependency is used by the application.
     implementation 'com.google.guava:guava:29.0-jre'
 
-    // Use JUnit test framework
     testImplementation 'junit:junit:4.13'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    // https://mvnrepository.com/artifact/org.springframework/spring-context
     compile group: 'org.springframework', name: 'spring-context', version: '5.3.1'
 
-    // https://mvnrepository.com/artifact/org.aspectj/aspectjweaver
     runtime group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.6'
 
-    // https://mvnrepository.com/artifact/org.aspectj/aspectjrt
     compile group: 'org.aspectj', name: 'aspectjrt', version: '1.9.6'
 
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter
     compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: '2.4.0'
 
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.4.0'
 
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor
     compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.4.0'
 
     implementation 'org.springframework.boot:spring-boot-starter'
@@ -47,4 +39,8 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:' + project.property('lombok.version')
 
     implementation 'com.h2database:h2:1.4.200'
+}
+
+test {
+    useJUnit()
 }
