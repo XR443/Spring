@@ -5,3 +5,7 @@ includeFlat 'module2'
 include 'module2:module2.homework1'
 project(':module2:module2.homework1').projectDir = new File('../module2.homework1')
 project(':module2:module2.homework1').name = 'module2.homework1'
+
+include 'module2:module2.homework2'
+project(':module2:module2.homework2').projectDir = new File('../module2.homework2')
+project(':module2:module2.homework2').name = 'module2.homework2'

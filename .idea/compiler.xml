@@ -12,6 +12,8 @@
         <module name="Spring.module2.module2.homework1.test" />
         <module name="Spring.module1.main" />
         <module name="Spring.module2.module2.homework1.main" />
+        <module name="Spring.module2.module2.homework2.test" />
+        <module name="Spring.module2.module2.homework2.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="14" />
