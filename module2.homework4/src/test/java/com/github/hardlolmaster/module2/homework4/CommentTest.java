@@ -9,8 +9,12 @@ import com.github.hardlolmaster.module2.homework4.domain.Book;
 import com.github.hardlolmaster.module2.homework4.domain.Comment;
 import com.github.hardlolmaster.module2.homework4.domain.Genre;
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
@@ -18,7 +22,10 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
-public class CommentTest extends MongoStart {
+@DataMongoTest
+@ExtendWith(SpringExtension.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+public class CommentTest {
 
     @Autowired
     private GenreRepository genreRepository;
@@ -52,7 +59,6 @@ public class CommentTest extends MongoStart {
         Comment comment = new Comment();
         comment.setUsername("Username");
         comment.setMessage("Message");
-        comment.setBook(book);
 
         book.getComments().add(comment);
 

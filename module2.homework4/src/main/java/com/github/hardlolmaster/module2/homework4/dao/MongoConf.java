@@ -15,8 +15,8 @@ import java.util.Collections;
 @Configuration
 @EnableMongoRepositories
 public class MongoConf extends AbstractMongoClientConfiguration {
-    @Bean
-    public MongoClient mongo() {
+    @Override
+    public MongoClient mongoClient() {
         ConnectionString connectionString = new ConnectionString("mongodb://localhost:27017/test");
         MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
                 .applyConnectionString(connectionString)

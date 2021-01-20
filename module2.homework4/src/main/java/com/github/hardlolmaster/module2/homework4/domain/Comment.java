@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.math.BigInteger;
 
@@ -20,5 +21,4 @@ public class Comment implements Serializable {
     private BigInteger id;
     private String username;
     private String message;
-    private Book book;
 }
