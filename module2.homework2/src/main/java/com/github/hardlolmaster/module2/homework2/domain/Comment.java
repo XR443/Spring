@@ -1,4 +1,4 @@
-package com.github.hardlolmaster.module2.homework3.domain;
+package com.github.hardlolmaster.module2.homework2.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

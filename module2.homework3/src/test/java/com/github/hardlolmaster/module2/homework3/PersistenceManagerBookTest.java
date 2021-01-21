@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@Transactional
 public class PersistenceManagerBookTest {
     @Autowired
     private IPersistenceManagerBook managerBook;

@@ -41,4 +41,8 @@ dependencies {
 
 test {
     useJUnit()
+    test {
+        useJUnit()
+        include 'com/github/hardlolmaster/module2/homework1/**'
+    }
 }

@@ -1,12 +1,13 @@
-package com.github.hardlolmaster.module2.homework3.dao;
+package com.github.hardlolmaster.module2.homework2.dao;
 
-import com.github.hardlolmaster.module2.homework3.domain.Genre;
+import com.github.hardlolmaster.module2.homework2.domain.Genre;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -23,6 +24,12 @@ public class PersistenceManagerGenreImpl implements IPersistenceManagerGenre {
     @Override
     public Genre getByID(Long id) {
         return entityManager.find(Genre.class, id);
+    }
+
+    @Override
+    public List<Genre> findAll() {
+        TypedQuery<Genre> namedQuery = entityManager.createQuery("select g from Genre g", Genre.class);
+        return namedQuery.getResultList();
     }
 
     @Override

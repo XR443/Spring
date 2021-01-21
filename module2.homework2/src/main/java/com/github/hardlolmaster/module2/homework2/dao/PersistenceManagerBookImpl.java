@@ -1,8 +1,9 @@
-package com.github.hardlolmaster.module2.homework3.dao;
+package com.github.hardlolmaster.module2.homework2.dao;
 
-import com.github.hardlolmaster.module2.homework3.domain.Author;
-import com.github.hardlolmaster.module2.homework3.domain.Book;
-import com.github.hardlolmaster.module2.homework3.domain.Genre;
+import com.github.hardlolmaster.module2.homework2.domain.Author;
+import com.github.hardlolmaster.module2.homework2.domain.Book;
+import com.github.hardlolmaster.module2.homework2.domain.Genre;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -25,7 +26,14 @@ public class PersistenceManagerBookImpl implements IPersistenceManagerBook {
 
     @Override
     public Book getByID(Long id) {
-        return entityManager.find(Book.class, id);
+        Book book = entityManager.find(Book.class, id);
+        return book;
+    }
+
+    @Override
+    public List<Book> findAll() {
+        TypedQuery<Book> namedQuery = entityManager.createQuery("select b from Book b", Book.class);
+        return namedQuery.getResultList();
     }
 
     @Override

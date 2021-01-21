@@ -1,4 +1,4 @@
-package com.github.hardlolmaster.module2.homework3;
+package com.github.hardlolmaster.module2.homework2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

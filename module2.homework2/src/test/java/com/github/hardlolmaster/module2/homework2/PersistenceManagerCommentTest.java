@@ -1,13 +1,13 @@
-package com.github.hardlolmaster.module2.homework3;
+package com.github.hardlolmaster.module2.homework2;
 
-import com.github.hardlolmaster.module2.homework3.dao.IPersistenceManagerAuthor;
-import com.github.hardlolmaster.module2.homework3.dao.IPersistenceManagerBook;
-import com.github.hardlolmaster.module2.homework3.dao.IPersistenceManagerComment;
-import com.github.hardlolmaster.module2.homework3.dao.IPersistenceManagerGenre;
-import com.github.hardlolmaster.module2.homework3.domain.Author;
-import com.github.hardlolmaster.module2.homework3.domain.Book;
-import com.github.hardlolmaster.module2.homework3.domain.Comment;
-import com.github.hardlolmaster.module2.homework3.domain.Genre;
+import com.github.hardlolmaster.module2.homework2.dao.IPersistenceManagerAuthor;
+import com.github.hardlolmaster.module2.homework2.dao.IPersistenceManagerBook;
+import com.github.hardlolmaster.module2.homework2.dao.IPersistenceManagerComment;
+import com.github.hardlolmaster.module2.homework2.dao.IPersistenceManagerGenre;
+import com.github.hardlolmaster.module2.homework2.domain.Author;
+import com.github.hardlolmaster.module2.homework2.domain.Book;
+import com.github.hardlolmaster.module2.homework2.domain.Comment;
+import com.github.hardlolmaster.module2.homework2.domain.Genre;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +15,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@Transactional
 public class PersistenceManagerCommentTest {
     @Autowired
     private IPersistenceManagerComment managerComment;
@@ -67,6 +71,10 @@ public class PersistenceManagerCommentTest {
         Comment byID = managerComment.getByID(comment.getId());
         assertNotNull(byID);
         assertEquals(comment, byID);
+
+        List<Comment> all = managerComment.findAll();
+        assertNotNull(all);
+        assertEquals(1, all.size());
     }
 
 }

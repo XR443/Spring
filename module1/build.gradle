@@ -40,5 +40,6 @@ dependencies {
 }
 
 test {
-    useJUnit()
+    useJUnit() 
+        include 'com/github/hardlolmaster/module1/homework/services/**'
 }
