@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #container > div {
+            display: inline-block;
+            border: solid 1px #000;
+        }
+
+        #container {
+            text-align: center;
+            margin: 0px auto;
+            width: 40%;
+        }
+    </style>
+</head>
+<body>
+
+<form action="/welcome" method="get">
+    <button>On welcome page</button>
+</form>
+
+<span th:unless="${pizzaCreated}">
+    <form action="/pizza/create" method="POST">
+        <input type="submit" value="New pizza">
+    </form>
+
+<!--    <table>-->
+<!--        <tr th:each="pizzaType: ${pizzaTypes}">-->
+<!--            <td th:text="${pizzaType.name}"></td>-->
+<!--            <td>-->
+<!--                <form action="/pizzaType/delete" method="POST">-->
+<!--                    <input type="hidden" name="id" th:value="${pizzaType.id}">-->
+<!--                    <input type="submit" value="Delete">-->
+<!--                </form>-->
+<!--            </td>-->
+<!--            <td>-->
+<!--                <form action="/pizzaType/update" method="POST">-->
+<!--                    <input type="hidden" name="id" th:value="${pizzaType.id}">-->
+<!--                    <input type="text" name="newType">-->
+<!--                    <input type="submit" value="Update">-->
+<!--                </form>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--    </table>-->
+</span>
+
+<span th:if="${pizzaCreated}">
+    <form action="/pizza/bake" method="POST">
+        <div id="container">
+            <div>
+                <span th:each="pizzaType: ${pizzaTypes}">
+                    <input type="radio" name="pizzaTypeId" th:value="${pizzaType.id}">
+                    <label th:text="${pizzaType.name}"></label><br>
+                </span>
+            </div>
+            <div>
+                <span th:each="pizzaAddition: ${pizzaAdditions}">
+                    <input type="checkbox" name="pizzaAdditionsId" th:value="${pizzaAddition.id}">
+                    <label th:text="${pizzaAddition.name}"></label><br>
+                </span>
+            </div>
+        </div>
+            <input type="submit" value="New pizza">
+    </form>
+</span>
+
+</body>
+</html>

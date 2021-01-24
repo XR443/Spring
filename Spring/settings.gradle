@@ -17,3 +17,7 @@ project(':module2:module2.homework3').name = 'module2.homework3'
 include 'module2:module2.homework4'
 project(':module2:module2.homework4').projectDir = new File('../module2.homework4')
 project(':module2:module2.homework4').name = 'module2.homework4'
+
+include 'module3:module3.homework1'
+project(':module3:module3.homework1').projectDir = new File('../module3.homework1')
+project(':module3:module3.homework1').name = 'module3.homework1'

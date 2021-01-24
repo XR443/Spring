@@ -12,12 +12,14 @@
         <module name="Spring.module2.module2.homework4.main" />
         <module name="Spring.module2.module2.homework1.main" />
         <module name="Spring.module2.module2.homework2.test" />
+        <module name="Spring.module3.module3.homework1.test" />
         <module name="Spring.module2.module2.homework1.test" />
         <module name="Spring.module1.main" />
         <module name="Spring.module2.module2.homework3.main" />
         <module name="Spring.module2.module2.homework4.test" />
         <module name="Spring.module2.module2.homework2.main" />
         <module name="Spring.module2.module2.homework3.test" />
+        <module name="Spring.module3.module3.homework1.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="14" />

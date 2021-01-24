@@ -1,10 +1,9 @@
 package com.github.hardlolmaster.module2.homework4.domain;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Id;
-import javax.persistence.Transient;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -23,7 +22,6 @@ public class Book implements Serializable {
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @Transient
     private List<Comment> comments = new ArrayList<>();
 
 }
