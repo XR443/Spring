@@ -10,7 +10,6 @@ import java.util.List;
 @Data
 @Entity
 @NoArgsConstructor
-@Builder
 public class Pizza {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)

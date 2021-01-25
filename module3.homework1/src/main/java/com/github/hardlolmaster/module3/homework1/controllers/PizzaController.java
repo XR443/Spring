@@ -59,10 +59,9 @@ public class PizzaController {
         if (additions.isEmpty()) {
             throw new RuntimeException(String.format("Pizza Addition with id %d not found", pizzaAdditionsId.get(0)));
         }
-        Pizza pizza = Pizza.builder()
-                .pizzaType(pizzaType.get())
-                .pizzaAdditions(additions)
-                .build();
+        Pizza pizza = new Pizza();
+        pizza.setPizzaType(pizzaType.get());
+        pizza.setPizzaAdditions(additions);
         pizzaRepository.save(pizza);
         return pizza(model);
     }
