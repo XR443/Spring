@@ -1,7 +1,7 @@
 package com.github.hardlolmaster.module3.homework2;
 
 import com.github.hardlolmaster.module3.homework2.controller.RestPizzaController;
-import com.github.hardlolmaster.module3.homework2.controller.RestPizzaTypeController;
+import com.github.hardlolmaster.module3.homework2.dao.PizzaAdditionRepository;
 import com.github.hardlolmaster.module3.homework2.dao.PizzaRepository;
 import com.github.hardlolmaster.module3.homework2.dao.PizzaTypeRepository;
 import com.github.hardlolmaster.module3.homework2.domain.Pizza;
@@ -18,8 +18,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,18 +34,26 @@ public class PizzaControllerTest {
     private RestPizzaController controller;
     @Autowired
     private PizzaRepository repository;
+    @Autowired
+    private PizzaTypeRepository pizzaTypeRepository;
+    @Autowired
+    private PizzaAdditionRepository pizzaAdditionRepository;
 
     @Test
     public void testRest() {
         assertNotNull(controller);
         assertNotNull(repository);
+        assertNotNull(pizzaTypeRepository);
+        assertNotNull(pizzaAdditionRepository);
 
         Pizza pizza = new Pizza();
         PizzaType pizzaType = new PizzaType();
-        pizzaType.setName("Square");
+        pizzaType.setName("pizzaType");
+        pizzaType = pizzaTypeRepository.save(pizzaType);
         pizza.setPizzaType(pizzaType);
         PizzaAddition pizzaAddition = new PizzaAddition();
-        pizzaAddition.setName("Cheese");
+        pizzaAddition.setName("pizzaAddition");
+        pizzaAddition = pizzaAdditionRepository.save(pizzaAddition);
         pizza.getPizzaAdditions().add(pizzaAddition);
         ResponseEntity<Boolean> createResponse = controller.create(pizza);
         assertNotNull(createResponse);
@@ -56,14 +62,16 @@ public class PizzaControllerTest {
         assertEquals(HttpStatus.OK, createResponse.getStatusCode());
         assertTrue(createResponse.getBody());
 
-        List<Pizza> pizzaTypes = controller.pizza();
-        assertNotNull(pizzaTypes);
+        List<Pizza> pizzaList = controller.pizza();
+        assertNotNull(pizzaList);
         List<Pizza> all = repository.findAll();
         assertNotNull(all);
-        assertEquals(all, pizzaTypes);
+        assertEquals(all, pizzaList);
 
-        pizzaType.setName("Round");
-        pizzaAddition.setName("Monterey Jack");
+        pizzaType.setName("pizzaType2");
+        pizzaTypeRepository.save(pizzaType);
+        pizzaAddition.setName("pizzaAddition2");
+        pizzaAdditionRepository.save(pizzaAddition);
         ResponseEntity<Boolean> editResponse = controller.edit(pizza);
         assertNotNull(editResponse);
         assertNotNull(editResponse.getStatusCode());

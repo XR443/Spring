@@ -21,11 +21,6 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.4.0'
 
     implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.4.1'
-
-    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.2.0'
-
-    compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
 
     compile 'org.projectlombok:lombok:' + project.property('lombok.version')
     annotationProcessor 'org.projectlombok:lombok:' + project.property('lombok.version')
@@ -33,11 +28,16 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:' + project.property('lombok.version')
     testAnnotationProcessor 'org.projectlombok:lombok:' + project.property('lombok.version')
 
-    implementation 'org.springframework.data:spring-data-jpa:2.4.2'
-    compile 'org.springframework.shell:spring-shell-starter:2.0.0.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.4.1'
+    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.2.0'
+    implementation group: 'org.springframework', name: 'spring-webflux', version: '5.3.3'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '2.4.2'
+    implementation group: 'org.mongodb', name: 'mongodb-driver-reactivestreams', version: '4.2.0'
+    testImplementation group: 'io.projectreactor', name: 'reactor-test', version: '3.4.2'
+
 }
 
 test {
     useJUnit()
-    include 'com/github/hardlolmaster/module2/homework4/**'
+    include 'com/github/hardlolmaster/**'
 }

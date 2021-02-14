@@ -43,12 +43,14 @@ public class RestPizzaController {
 
     @DeleteMapping("/pizza/delete")
     public ResponseEntity<Boolean> delete(@RequestBody Pizza pizza) {
+        pizza = reattachPizza(pizza);
         pizzaRepository.delete(pizza);
         return ResponseEntity.ok(true);
     }
 
     @PutMapping("/pizza/edit")
     public ResponseEntity<Boolean> edit(@RequestBody Pizza pizza) {
+        pizza = reattachPizza(pizza);
         pizzaRepository.save(pizza);
         return ResponseEntity.ok(true);
     }
@@ -66,8 +68,8 @@ public class RestPizzaController {
             return optionalPizzaAddition.get();
         }).collect(Collectors.toList());
         Pizza to = new Pizza();
-        to.setPizzaType(optionalPizzaType.get());
-        to.setPizzaAdditions(additions);
-        return to;
+        from.setPizzaType(optionalPizzaType.get());
+        from.setPizzaAdditions(additions);
+        return from;
     }
 }

@@ -28,15 +28,4 @@ public class Main {
 
     private PizzaTypeRepository pizzaTypeRepository;
     private PizzaAdditionRepository pizzaAdditionRepository;
-
-    @PostConstruct
-    public void init() {
-        PizzaType type = new PizzaType();
-        type.setName("Round");
-        pizzaTypeRepository.save(type);
-
-        PizzaAddition addition = new PizzaAddition();
-        addition.setName("Monterey Jack");
-        pizzaAdditionRepository.save(addition);
-    }
 }
