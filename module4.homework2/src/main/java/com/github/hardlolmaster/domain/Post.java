@@ -1,20 +1,19 @@
-package com.github.hardlolmaster.module3.homework1.domain;
+package com.github.hardlolmaster.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
 @NoArgsConstructor
-public class Pizza {
-    @Id()
+public class Post {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private PizzaType pizzaType;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<PizzaAddition> pizzaAdditions;
+    private User user;
+    private String content;
 }
+

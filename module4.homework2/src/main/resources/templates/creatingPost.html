@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form>
+    <p>
+        <textarea rows="10" cols="45" name="content" id="content"></textarea>
+    </p>
+    <p>
+        <input id="submit" type="button" value="Create Post">
+    </p>
+</form>
+<script>
+    let post = {
+        content: null
+    }
+
+    document.getElementById("submit").onclick = function () {
+        post.content = document.getElementById("content").value
+        sendRequest("post", "create", "POST", function (json) {
+            document.location.href = '/posts'
+        }, post)
+    }
+
+    async function sendRequest(entity, request, method, callback, value = null) {
+        let url = 'http://localhost:8080/' + entity;
+        if (request !== "fetch") {
+            url += '/' + request;
+        }
+        let response = await fetch(url, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: value ? JSON.stringify(value) : null
+        })
+        if (response.ok) {
+            let json = await response.json();
+            callback(json);
+        } else {
+            alert("Ошибка HTTP: " + response.status);
+        }
+    }
+</script>
+</body>
+</html>
