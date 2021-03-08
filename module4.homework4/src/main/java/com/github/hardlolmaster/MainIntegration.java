@@ -24,8 +24,11 @@ public class MainIntegration {
         ConfigurableApplicationContext context = SpringApplication.run(MainIntegration.class);
 
         UpdateService updateService = context.getBean(UpdateService.class);
-        User user = updateService.updateUser(new User("username", "email"));
+        User user1 = new User("username", "email");
+        System.out.println(user1);
+        User user = updateService.updateUser(user1);
         System.out.println(user);
+        System.out.println(user1);
         Collection<User> users = updateService.updateUsers(
                 Arrays.asList(new User("username1", "email1"), new User("username2", "email2")));
         System.out.println(users);

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .bordered {
+            border: 4px double black; /* Параметры границы */
+            padding: 10px; /* Поля вокруг текста */
+            width: 500px;
+    </style>
+</head>
+<body>
+<form action="/creatingPost" method="get">
+    <input type="submit" value="Create Post" id="frm1_submit"/>
+</form>
+<!--/*@thymesVar id="posts" type="com.github.hardlolmaster.domain.Post"*/-->
+<th:block th:each="post: ${posts}">
+    <div class="bordered">
+        <!--/*@thymesVar id="user" type="com.github.hardlolmaster.domain.User"*/-->
+        <p th:utext="${post.user.username}"></p>
+        <p th:utext="${post.content}"></p>
+    </div>
+</th:block>
+</body>
+</html>
