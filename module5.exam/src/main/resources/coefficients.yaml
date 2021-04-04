@@ -1,0 +1,33 @@
+!!com.github.hardlolmaster.service.coefficient.Coefficients
+propertyTypeCoefficient:
+  apartment: 1.7
+  house: 1.5
+  room: 1.3
+
+constructionYearCoefficient:
+  less:
+    value: 2000
+    coefficient: 1.3
+  from:
+    value: 2000
+    coefficient: 1.6
+  to:
+    value: 2014
+    coefficient: 1.6
+  more:
+    value: 2015
+    coefficient: 2
+
+areaCoefficient:
+  less:
+    value: 50
+    coefficient: 1.2
+  from:
+    value: 50
+    coefficient: 1.6
+  to:
+    value: 100
+    coefficient: 1.6
+  more:
+    value: 100
+    coefficient: 2
