@@ -2,12 +2,12 @@ package com.github.hardlolmaster;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.hardlolmaster.actions.CalculatePropertyInsurancePremiumAction;
-import com.github.hardlolmaster.actions.FindIndividualsByNameAction;
+import com.github.hardlolmaster.actions.*;
 import com.github.hardlolmaster.controller.ResponseObject;
 import com.github.hardlolmaster.domain.Individual;
 import com.github.hardlolmaster.domain.PropertyInsuranceContract;
 import com.github.hardlolmaster.domain.PropertyInsuranceObject;
+import com.github.hardlolmaster.repository.ContractRepository;
 import com.github.hardlolmaster.repository.IndividualRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +30,10 @@ import static org.junit.Assert.*;
 public class CommonActionTest {
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private IndividualRepository individualRepository;
+    @Autowired
+    private ContractRepository contractRepository;
 
     @Autowired
     private CalculatePropertyInsurancePremiumAction calculatePropertyInsurancePremiumAction;
@@ -47,17 +51,15 @@ public class CommonActionTest {
         contract.setInsuranceObject(insuranceObject);
 
         Map<?, ?> input = getAsMap(contract);
-        ResponseObject<PropertyInsuranceContract> responseObject = calculatePropertyInsurancePremiumAction.execute(input);
+        ResponseObject<?> responseObject = calculatePropertyInsurancePremiumAction.execute(input);
         assertNotNull(responseObject);
         assertTrue(responseObject.isOk());
         assertNotNull(responseObject.getPayload());
-        assertTrue(responseObject.getPayload().getInsuranceObject().getInsurancePremium() > 0d);
+        assertTrue(((PropertyInsuranceContract) responseObject.getPayload()).getInsuranceObject().getInsurancePremium() > 0d);
     }
 
     @Autowired
     private FindIndividualsByNameAction findIndividualsByNameAction;
-    @Autowired
-    private IndividualRepository individualRepository;
 
     @Test
     public void testFindIndividualsByNameAction() throws JsonProcessingException {
@@ -81,23 +83,70 @@ public class CommonActionTest {
             Individual object = new Individual();
             object.setLastName("Lastname");
             object.setFirstName("fIrStName");
-            ResponseObject<List<Individual>> responseObject = findIndividualsByNameAction.execute(getAsMap(object));
+            ResponseObject<?> responseObject = findIndividualsByNameAction.execute(getAsMap(object));
             assertNotNull(responseObject);
             assertTrue(responseObject.isOk());
             assertNotNull(responseObject.getPayload());
-            assertEquals(2, responseObject.getPayload().size());
+            assertEquals(2, ((List<?>) responseObject.getPayload()).size());
         }
         {
             Individual object = new Individual();
             object.setLastName("Lastname");
             object.setFirstName("fIrStName");
             object.setSecondName("seCONdNaME");
-            ResponseObject<List<Individual>> responseObject = findIndividualsByNameAction.execute(getAsMap(object));
+            ResponseObject<?> responseObject = findIndividualsByNameAction.execute(getAsMap(object));
             assertNotNull(responseObject);
             assertTrue(responseObject.isOk());
             assertNotNull(responseObject.getPayload());
-            assertEquals(2, responseObject.getPayload().size());
+            assertEquals(2, ((List<?>) responseObject.getPayload()).size());
         }
+    }
+
+    @Autowired
+    private GetAllContractsAction getAllContractsAction;
+
+    @Test
+    public void testGetAllContractsAction() {
+        contractRepository.save(new PropertyInsuranceContract());
+        contractRepository.save(new PropertyInsuranceContract());
+        contractRepository.save(new PropertyInsuranceContract());
+
+        ResponseObject<?> execute = getAllContractsAction.execute(null);
+
+        assertNotNull(execute);
+        assertTrue(execute.isOk());
+        assertNotNull(execute.getPayload());
+        assertEquals(3, ((List<?>) execute.getPayload()).size());
+    }
+
+    @Autowired
+    private SaveContractAction saveContractAction;
+
+    @Test
+    public void testSaveContractAction() {
+        ResponseObject<?> execute = saveContractAction.execute(new PropertyInsuranceContract());
+
+        assertNotNull(execute);
+        assertTrue(execute.isOk());
+        assertNotNull(execute.getPayload());
+
+        assertEquals(1, contractRepository.findAll().size());
+
+    }
+
+    @Autowired
+    private SaveIndividualAction saveIndividualAction;
+
+    @Test
+    public void testSaveIndividualAction() {
+        ResponseObject<?> execute = saveIndividualAction.execute(new Individual());
+
+        assertNotNull(execute);
+        assertTrue(execute.isOk());
+        assertNotNull(execute.getPayload());
+
+        assertEquals(1, individualRepository.findAll().size());
+
     }
 
     private java.util.Date getDate(int year, int month, int dayOfMonth) {

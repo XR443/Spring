@@ -1,6 +1,6 @@
 package com.github.hardlolmaster.web;
 
-import com.github.hardlolmaster.hystrix.CommandGetAllPosts;
+import com.github.hardlolmaster.utils.CommandGetAllPosts;
 import com.github.hardlolmaster.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

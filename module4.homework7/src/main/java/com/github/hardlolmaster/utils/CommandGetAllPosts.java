@@ -1,4 +1,4 @@
-package com.github.hardlolmaster.hystrix;
+package com.github.hardlolmaster.utils;
 
 import com.github.hardlolmaster.domain.Post;
 import com.github.hardlolmaster.repository.PostRepository;

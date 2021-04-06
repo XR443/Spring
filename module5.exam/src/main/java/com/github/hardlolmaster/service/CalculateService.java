@@ -51,12 +51,14 @@ public class CalculateService {
         LocalDate insurancePeriodFrom = periodFrom.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
+        contract.setInsurancePeriodFrom(Date.from(insurancePeriodFrom.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
 
         Date periodTo = contract.getInsurancePeriodTo();
         assert periodTo != null;
         LocalDate insurancePeriodTo = periodTo.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
+        contract.setInsurancePeriodTo(Date.from(insurancePeriodTo.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
 
         long days = DAYS.between(insurancePeriodFrom, insurancePeriodTo);
         double premium = insuranceObject.getInsuranceSum() / days;

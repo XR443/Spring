@@ -2,12 +2,14 @@ package com.github.hardlolmaster.security;
 
 import com.github.hardlolmaster.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 @Service
@@ -46,6 +48,10 @@ public class UserDetailsService implements org.springframework.security.core.use
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
-        return new Principal(user);
+        ArrayList<SimpleGrantedAuthority> list = new ArrayList<>(user.getRoles().size());
+        for (Role role : user.getRoles()) {
+            list.add(new SimpleGrantedAuthority("ROLE_" + role.getName().toUpperCase()));
+        }
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), list);
     }
 }

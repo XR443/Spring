@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface ContractRepository extends PagingAndSortingRepository<PropertyInsuranceContract, Long> {
     Optional<PropertyInsuranceContract> findByNumber(String number);
+    Boolean existsByNumber(String number);
 
     @Override
     List<PropertyInsuranceContract> findAll();

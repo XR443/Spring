@@ -22,6 +22,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 @Configuration
@@ -35,7 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/**").authenticated()
                 .and()
                 .anonymous().disable()
-                .httpBasic();
+                .httpBasic()
+                .authenticationEntryPoint((request, response, authException) ->
+                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage()));
     }
 
     @Bean

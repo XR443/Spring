@@ -11,4 +11,7 @@ public interface IndividualRepository extends CrudRepository<Individual, Long> {
     List<Individual> findByFirstNameIsLikeIgnoreCaseAndLastNameIsLikeIgnoreCaseAndSecondNameIsLikeIgnoreCase(String firstName,
                                                                                                              String lastName,
                                                                                                              String secondName);
+
+    @Override
+    List<Individual> findAll();
 }

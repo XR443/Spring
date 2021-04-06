@@ -1,7 +1,8 @@
 package com.github.hardlolmaster.actions;
 
 import com.github.hardlolmaster.controller.ResponseObject;
-import com.github.hardlolmaster.repository.ContractRepository;
+import com.github.hardlolmaster.domain.Individual;
+import com.github.hardlolmaster.repository.IndividualRepository;
 import com.netflix.hystrix.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,20 +11,24 @@ import static com.github.hardlolmaster.controller.CommonResponseObject.SOMETHING
 import static com.github.hardlolmaster.utils.GetCommandGroupKey.getFor;
 
 @Component
-public class GetAllContractsAction extends AbstractAction {
-    private final ContractRepository repository;
+public class SaveIndividualAction extends AbstractAction {
+    private final IndividualRepository repository;
 
     @Autowired
-    public GetAllContractsAction(ContractRepository repository) {
+    public SaveIndividualAction(IndividualRepository repository) {
         this.repository = repository;
     }
 
     @Override
     public ResponseObject<?> execute(Object input) {
-        return new HystrixCommand<ResponseObject<?>>(getFor("GetAllContracts")) {
+        if (!(input instanceof Individual)) {
+            return new ResponseObject<>(false, "Получен объект не того типа");
+        }
+        final Individual individual = (Individual) input;
+        return new HystrixCommand<ResponseObject<?>>(getFor("SaveContract")) {
             @Override
             protected ResponseObject<?> run() {
-                return new ResponseObject<>(true, repository.findAll());
+                return new ResponseObject<>(true, repository.save(individual));
             }
 
             @Override
