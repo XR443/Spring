@@ -19,15 +19,15 @@ public class InsuranceObjectValidator implements Validator {
         if (!(object instanceof PropertyInsuranceObject))
             return false;
         PropertyInsuranceObject insuranceObject = (PropertyInsuranceObject) object;
-        if (insuranceObject.getInsuranceSum() == null || insuranceObject.getInsuranceSum() > 0.0d)
+        if (insuranceObject.getInsuranceSum() == null || insuranceObject.getInsuranceSum() <= 0.0d)
             return false;
-        if (insuranceObject.getInsurancePremium() == null || insuranceObject.getInsurancePremium() > 0.0d)
+        if (insuranceObject.getInsurancePremium() == null || insuranceObject.getInsurancePremium() <= 0.0d)
             return false;
         if (insuranceObject.getPropertyType() == null || insuranceObject.getPropertyType().isEmpty())
             return false;
         if (insuranceObject.getConstructionYear() == null)
             return false;
-        if (insuranceObject.getArea() == null || insuranceObject.getArea() > 0.0d)
+        if (insuranceObject.getArea() == null || insuranceObject.getArea() <= 0.0d)
             return false;
         return addressValidator.valid(insuranceObject.getAddress());
     }

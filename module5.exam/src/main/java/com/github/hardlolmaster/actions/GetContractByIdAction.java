@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+import static com.github.hardlolmaster.controller.CommonResponseObject.INCORRECT_INPUT;
 import static com.github.hardlolmaster.controller.CommonResponseObject.SOMETHING_WENT_WRONG;
 
 @Component
@@ -28,7 +29,7 @@ public class GetContractByIdAction extends AbstractAction {
     @Override
     public ResponseObject<?> execute(Object input) {
         if (input == null)
-            return new ResponseObject<>(false, "Не представлен id");
+            return INCORRECT_INPUT;
         final Long id = objectMapper.convertValue(input, Long.class);
         return new HystrixCommand<ResponseObject<?>>(HystrixCommandGroupKey.Factory.asKey("GetContractById")) {
 

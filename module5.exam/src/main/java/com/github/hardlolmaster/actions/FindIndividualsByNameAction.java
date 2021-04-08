@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static com.github.hardlolmaster.controller.CommonResponseObject.INCORRECT_INPUT;
 import static com.github.hardlolmaster.controller.CommonResponseObject.SOMETHING_WENT_WRONG;
 import static com.github.hardlolmaster.utils.GetCommandGroupKey.getFor;
 
@@ -34,7 +35,7 @@ public class FindIndividualsByNameAction extends AbstractAction {
     public ResponseObject<?> execute(Object input) {
         Individual individual = objectMapper.convertValue(input, Individual.class);
         if (!validator.valid(individual))
-            return new ResponseObject<>(false, "Указаны некорректные данные");
+            return INCORRECT_INPUT;
 
         return new HystrixCommand<ResponseObject<?>>(getFor("FindIndividualsByName")) {
 

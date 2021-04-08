@@ -4,11 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.hardlolmaster.actions.*;
 import com.github.hardlolmaster.controller.ResponseObject;
-import com.github.hardlolmaster.domain.Individual;
-import com.github.hardlolmaster.domain.PropertyInsuranceContract;
-import com.github.hardlolmaster.domain.PropertyInsuranceObject;
+import com.github.hardlolmaster.domain.*;
 import com.github.hardlolmaster.repository.ContractRepository;
 import com.github.hardlolmaster.repository.IndividualRepository;
+import com.github.hardlolmaster.service.CalculateService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,8 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class CommonActionTest {
+public class CommonActionTest
+{
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
@@ -39,15 +39,39 @@ public class CommonActionTest {
     private CalculatePropertyInsurancePremiumAction calculatePropertyInsurancePremiumAction;
 
     @Test
-    public void testCalculateInsurancePremiumAction() throws JsonProcessingException {
+    public void testCalculateInsurancePremiumAction() throws JsonProcessingException
+    {
         PropertyInsuranceContract contract = new PropertyInsuranceContract();
         contract.setInsurancePeriodFrom(getDate(2021, 1, 1));
         contract.setInsurancePeriodTo(getDate(2022, 2, 2));
+        contract.setCalculateDate(getDate(2021, 1, 1));
+        contract.setConclusionDate(getDate(2021, 1, 1));
+        contract.setNumber("11111111");
+        Individual insurer = new Individual();
+        insurer.setFirstName("F");
+        insurer.setLastName("F");
+        insurer.setSecondName("F");
+        insurer.setBirthdate(getDate(2000,1,1));
+        Document document = new Document();
+        document.setNumber("111111");
+        document.setSeries("1111");
+        document.setIssuedWhen(getDate(2020,1,1));
+        document.setIssuedBy("1111111");
+        insurer.setDocument(document);
+        contract.setInsurer(insurer);
         PropertyInsuranceObject insuranceObject = new PropertyInsuranceObject();
         insuranceObject.setInsuranceSum(100_000d);
         insuranceObject.setPropertyType("Квартира");
         insuranceObject.setArea(50d);
         insuranceObject.setConstructionYear(2015L);
+        Address address = new Address();
+        address.setApartment(11L);
+        address.setCity("city");
+        address.setCountry("Country");
+        address.setHouse(10L);
+        address.setRegion("Region");
+        address.setStreet("Street");
+        insuranceObject.setAddress(address);
         contract.setInsuranceObject(insuranceObject);
 
         Map<?, ?> input = getAsMap(contract);
@@ -62,7 +86,8 @@ public class CommonActionTest {
     private FindIndividualsByNameAction findIndividualsByNameAction;
 
     @Test
-    public void testFindIndividualsByNameAction() throws JsonProcessingException {
+    public void testFindIndividualsByNameAction() throws JsonProcessingException
+    {
         {
             {
                 Individual entity = new Individual();
@@ -106,7 +131,8 @@ public class CommonActionTest {
     private GetAllContractsAction getAllContractsAction;
 
     @Test
-    public void testGetAllContractsAction() {
+    public void testGetAllContractsAction()
+    {
         contractRepository.save(new PropertyInsuranceContract());
         contractRepository.save(new PropertyInsuranceContract());
         contractRepository.save(new PropertyInsuranceContract());
@@ -123,8 +149,43 @@ public class CommonActionTest {
     private SaveContractAction saveContractAction;
 
     @Test
-    public void testSaveContractAction() {
-        ResponseObject<?> execute = saveContractAction.execute(new PropertyInsuranceContract());
+    public void testSaveContractAction()
+    {
+        PropertyInsuranceContract contract = new PropertyInsuranceContract();
+        contract.setInsurancePeriodFrom(getDate(2021, 1, 1));
+        contract.setInsurancePeriodTo(getDate(2022, 2, 2));
+        contract.setCalculateDate(getDate(2021, 1, 1));
+        contract.setConclusionDate(getDate(2021, 1, 1));
+        contract.setNumber("11111111");
+        Individual insurer = new Individual();
+        insurer.setFirstName("F");
+        insurer.setLastName("F");
+        insurer.setSecondName("F");
+        insurer.setBirthdate(getDate(2000,1,1));
+        Document document = new Document();
+        document.setNumber("111111");
+        document.setSeries("1111");
+        document.setIssuedWhen(getDate(2020,1,1));
+        document.setIssuedBy("1111111");
+        insurer.setDocument(document);
+        contract.setInsurer(insurer);
+        PropertyInsuranceObject insuranceObject = new PropertyInsuranceObject();
+        insuranceObject.setInsuranceSum(100_000d);
+        insuranceObject.setPropertyType("Квартира");
+        insuranceObject.setArea(50d);
+        insuranceObject.setConstructionYear(2015L);
+        insuranceObject.setInsurancePremium(100d);
+        Address address = new Address();
+        address.setApartment(11L);
+        address.setCity("city");
+        address.setCountry("Country");
+        address.setHouse(10L);
+        address.setRegion("Region");
+        address.setStreet("Street");
+        insuranceObject.setAddress(address);
+        contract.setInsuranceObject(insuranceObject);
+
+        ResponseObject<?> execute = saveContractAction.execute(contract);
 
         assertNotNull(execute);
         assertTrue(execute.isOk());
@@ -138,7 +199,8 @@ public class CommonActionTest {
     private SaveIndividualAction saveIndividualAction;
 
     @Test
-    public void testSaveIndividualAction() {
+    public void testSaveIndividualAction()
+    {
         ResponseObject<?> execute = saveIndividualAction.execute(new Individual());
 
         assertNotNull(execute);
@@ -149,11 +211,13 @@ public class CommonActionTest {
 
     }
 
-    private java.util.Date getDate(int year, int month, int dayOfMonth) {
+    private java.util.Date getDate(int year, int month, int dayOfMonth)
+    {
         return Date.from(LocalDate.of(year, month, dayOfMonth).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
     }
 
-    private Map<?, ?> getAsMap(Object object) throws JsonProcessingException {
+    private Map<?, ?> getAsMap(Object object) throws JsonProcessingException
+    {
         return objectMapper.readValue(objectMapper.writeValueAsString(object), Map.class);
     }
 }
