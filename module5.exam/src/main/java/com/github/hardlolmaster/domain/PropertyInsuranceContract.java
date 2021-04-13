@@ -2,6 +2,7 @@ package com.github.hardlolmaster.domain;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,7 +13,8 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-public class PropertyInsuranceContract extends IdObject {
+public class PropertyInsuranceContract extends IdObject
+{
     private String number;
     private String comment;
     private Date insurancePeriodFrom;

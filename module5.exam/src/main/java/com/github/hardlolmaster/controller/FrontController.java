@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
 import java.util.Map;
 
 @RestController
+@Transactional
 public class FrontController {
     private final Map<String, AbstractAction> actionMap;
 

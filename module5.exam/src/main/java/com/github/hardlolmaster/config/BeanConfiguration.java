@@ -5,9 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import org.yaml.snakeyaml.Yaml;
 
 @Configuration
-public class BeanConfiguration {
+public class BeanConfiguration
+{
     @Bean
-    public Yaml yaml() {
+    public Yaml yaml()
+    {
         return new Yaml();
     }
 }

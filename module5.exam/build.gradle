@@ -52,6 +52,8 @@ dependencies {
     implementation group: 'ru.redcom.lib', name: 'dadata-api-client', version: '0.0.1'
     implementation group: 'org.yaml', name: 'snakeyaml', version: '1.28'
 
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-hibernate5', version: '2.9.8'
+
 }
 
 jar {
