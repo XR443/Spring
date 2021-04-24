@@ -18,5 +18,5 @@ public class Address extends IdObject {
     private String housing;
     private String building;
     private Long apartment;
-    private String Street;
+    private String street;
 }

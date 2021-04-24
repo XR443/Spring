@@ -1,5 +1,6 @@
 package com.github.hardlolmaster.actions;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.hardlolmaster.controller.ResponseObject;
 import com.github.hardlolmaster.domain.PropertyInsuranceContract;
 import com.github.hardlolmaster.repository.ContractRepository;
@@ -21,23 +22,22 @@ public class SaveContractAction extends AbstractAction
 {
     private final ContractRepository repository;
     private final Validator validator;
+    private final ObjectMapper objectMapper;
 
     @Autowired
     public SaveContractAction(ContractRepository repository,
-            @Qualifier("saveContractValidator") Validator validator)
+            @Qualifier("saveContractValidator") Validator validator,
+            ObjectMapper objectMapper)
     {
         this.repository = repository;
         this.validator = validator;
+        this.objectMapper = objectMapper;
     }
 
     @Override
     public ResponseObject<?> execute(Object input)
     {
-        if (!(input instanceof PropertyInsuranceContract))
-        {
-            return new ResponseObject<>(false, "Получен объект не того типа");
-        }
-        final PropertyInsuranceContract contract = (PropertyInsuranceContract) input;
+        final PropertyInsuranceContract contract = objectMapper.convertValue(input, PropertyInsuranceContract.class);
         if (!validator.valid(contract))
             return INCORRECT_INPUT;
         //TODO fix bug with timeout. Command fail in debug by timeout, default timeout is 1s

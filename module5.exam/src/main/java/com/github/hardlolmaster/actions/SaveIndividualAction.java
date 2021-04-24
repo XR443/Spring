@@ -1,5 +1,6 @@
 package com.github.hardlolmaster.actions;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.hardlolmaster.controller.ResponseObject;
 import com.github.hardlolmaster.domain.Individual;
 import com.github.hardlolmaster.repository.IndividualRepository;
@@ -14,33 +15,39 @@ import static com.github.hardlolmaster.controller.CommonResponseObject.SOMETHING
 import static com.github.hardlolmaster.utils.GetCommandGroupKey.getFor;
 
 @Component
-public class SaveIndividualAction extends AbstractAction {
+public class SaveIndividualAction extends AbstractAction
+{
     private final IndividualRepository repository;
     private final Validator validator;
+    private final ObjectMapper objectMapper;
 
     @Autowired
     public SaveIndividualAction(IndividualRepository repository,
-            @Qualifier("individualValidator") Validator validator) {
+            @Qualifier("individualValidator") Validator validator,
+            ObjectMapper objectMapper)
+    {
         this.repository = repository;
         this.validator = validator;
+        this.objectMapper = objectMapper;
     }
 
     @Override
-    public ResponseObject<?> execute(Object input) {
-        if (!(input instanceof Individual)) {
-            return new ResponseObject<>(false, "Получен объект не того типа");
-        }
-        final Individual individual = (Individual) input;
-        if(validator.valid(individual))
+    public ResponseObject<?> execute(Object input)
+    {
+        final Individual individual = objectMapper.convertValue(input, Individual.class);
+        if (!validator.valid(individual))
             return INCORRECT_INPUT;
-        return new HystrixCommand<ResponseObject<?>>(getFor("SaveContract")) {
+        return new HystrixCommand<ResponseObject<?>>(getFor("SaveContract"))
+        {
             @Override
-            protected ResponseObject<?> run() {
+            protected ResponseObject<?> run()
+            {
                 return new ResponseObject<>(true, repository.save(individual));
             }
 
             @Override
-            protected ResponseObject<?> getFallback() {
+            protected ResponseObject<?> getFallback()
+            {
                 return SOMETHING_WENT_WRONG;
             }
 

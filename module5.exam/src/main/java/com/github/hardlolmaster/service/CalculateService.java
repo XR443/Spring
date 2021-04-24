@@ -16,32 +16,40 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 @PropertySource("classpath:application.properties")
-public class CalculateService {
+public class CalculateService
+{
     private final Yaml yaml;
     @Value("${coefficients.file}")
     private String pathToCoefficients;
     private Coefficients coefficients;
 
-    public CalculateService(Yaml yaml) {
+    public CalculateService(Yaml yaml)
+    {
         this.yaml = yaml;
     }
 
     @PostConstruct
-    public void init() {
+    public void init()
+    {
         InputStream inputStream = this.getClass()
                 .getClassLoader()
                 .getResourceAsStream(pathToCoefficients);
         coefficients = yaml.load(inputStream);
     }
 
-    public PropertyInsuranceContract calculate(@NotNull PropertyInsuranceContract contract) {
+    public PropertyInsuranceContract calculate(@NotNull PropertyInsuranceContract contract)
+    {
         PropertyInsuranceObject insuranceObject = contract.getInsuranceObject();
         assert insuranceObject != null;
         assert insuranceObject.getInsuranceSum() != null;
@@ -51,19 +59,18 @@ public class CalculateService {
         LocalDate insurancePeriodFrom = periodFrom.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
-        contract.setInsurancePeriodFrom(Date.from(insurancePeriodFrom.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
 
         Date periodTo = contract.getInsurancePeriodTo();
         assert periodTo != null;
         LocalDate insurancePeriodTo = periodTo.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
-        contract.setInsurancePeriodTo(Date.from(insurancePeriodTo.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
 
         long days = DAYS.between(insurancePeriodFrom, insurancePeriodTo);
         double premium = insuranceObject.getInsuranceSum() / days;
 
-        switch (insuranceObject.getPropertyType().toLowerCase()) {
+        switch (insuranceObject.getPropertyType().toLowerCase())
+        {
             case "квартира" -> premium *= coefficients.getPropertyTypeCoefficient().getApartment();
             case "дом" -> premium *= coefficients.getPropertyTypeCoefficient().getHouse();
             case "комната" -> premium *= coefficients.getPropertyTypeCoefficient().getRoom();
@@ -71,29 +78,50 @@ public class CalculateService {
 
         Long constructionYear = insuranceObject.getConstructionYear();
         ConstructionYearCoefficient constructionYearCoefficient = coefficients.getConstructionYearCoefficient();
-        if (constructionYear < constructionYearCoefficient.getLess().getValue()) {
+        if (constructionYear < constructionYearCoefficient.getLess().getValue())
+        {
             premium *= constructionYearCoefficient.getLess().getCoefficient();
-        } else if (constructionYear >= constructionYearCoefficient.getFrom().getValue()
-                && constructionYear < constructionYearCoefficient.getTo().getValue()) {
+        }
+        else if (constructionYear >= constructionYearCoefficient.getFrom().getValue()
+                && constructionYear < constructionYearCoefficient.getTo().getValue())
+        {
             premium *= constructionYearCoefficient.getFrom().getCoefficient();
-        } else if (constructionYear >= constructionYearCoefficient.getMore().getValue()) {
+        }
+        else if (constructionYear >= constructionYearCoefficient.getMore().getValue())
+        {
             premium *= constructionYearCoefficient.getMore().getCoefficient();
         }
 
         Double area = insuranceObject.getArea();
         AreaCoefficient areaCoefficient = coefficients.getAreaCoefficient();
-        if (area < areaCoefficient.getLess().getValue()) {
+        if (area < areaCoefficient.getLess().getValue())
+        {
             premium *= areaCoefficient.getLess().getCoefficient();
-        } else if (area >= areaCoefficient.getFrom().getValue()
-                && area < areaCoefficient.getTo().getValue()) {
+        }
+        else if (area >= areaCoefficient.getFrom().getValue()
+                && area < areaCoefficient.getTo().getValue())
+        {
             premium *= areaCoefficient.getFrom().getCoefficient();
-        } else if (area >= areaCoefficient.getMore().getValue()) {
+        }
+        else if (area >= areaCoefficient.getMore().getValue())
+        {
             premium *= areaCoefficient.getMore().getCoefficient();
         }
 
         double insurancePremium = BigDecimal.valueOf(premium).setScale(2, RoundingMode.HALF_UP).doubleValue();
         insuranceObject.setInsurancePremium(insurancePremium);
 
+        long millisLocalDate = LocalDate.now()
+                .atStartOfDay().toInstant(OffsetDateTime
+                        .now()
+                        .getOffset())
+                .toEpochMilli();
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.setTimeInMillis(millisLocalDate + TimeUnit.DAYS.toMillis(1) - 1);
+
+        contract.setCalculateDate(calendar.getTime());
         return contract;
     }
 }

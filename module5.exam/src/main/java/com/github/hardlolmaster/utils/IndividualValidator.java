@@ -23,7 +23,7 @@ public class IndividualValidator implements Validator {
             return false;
         if (individual.getLastName() == null || individual.getLastName().isEmpty())
             return false;
-        if (individual.getBirthdate() == null)
+        if (individual.getBirthday() == null)
             return false;
         return documentValidator.valid(individual.getDocument());
     }

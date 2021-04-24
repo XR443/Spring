@@ -19,6 +19,7 @@ public class FrontController {
         this.actionMap = actionMap;
     }
 
+    //TODO переписать на path variable
     @PostMapping(path = "/property.insurance")
     public ResponseObject<?> executeAction(@RequestBody CommandObject commandObject) {
         String command = commandObject.getCommand();

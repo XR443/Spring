@@ -37,7 +37,7 @@ public class MainExam
         insurer.setFirstName("F");
         insurer.setLastName("F");
         //insurer.setSecondName("F");
-        insurer.setBirthdate(getDate(2000, 1, 1));
+        insurer.setBirthday(getDate(2000, 1, 1));
         Document document = new Document();
         document.setNumber("111111");
         document.setSeries("1111");

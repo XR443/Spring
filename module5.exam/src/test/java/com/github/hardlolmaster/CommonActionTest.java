@@ -7,7 +7,6 @@ import com.github.hardlolmaster.controller.ResponseObject;
 import com.github.hardlolmaster.domain.*;
 import com.github.hardlolmaster.repository.ContractRepository;
 import com.github.hardlolmaster.repository.IndividualRepository;
-import com.github.hardlolmaster.service.CalculateService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +50,7 @@ public class CommonActionTest
         insurer.setFirstName("F");
         insurer.setLastName("F");
         insurer.setSecondName("F");
-        insurer.setBirthdate(getDate(2000,1,1));
+        insurer.setBirthday(getDate(2000,1,1));
         Document document = new Document();
         document.setNumber("111111");
         document.setSeries("1111");
@@ -161,7 +160,7 @@ public class CommonActionTest
         insurer.setFirstName("F");
         insurer.setLastName("F");
         insurer.setSecondName("F");
-        insurer.setBirthdate(getDate(2000,1,1));
+        insurer.setBirthday(getDate(2000,1,1));
         Document document = new Document();
         document.setNumber("111111");
         document.setSeries("1111");
