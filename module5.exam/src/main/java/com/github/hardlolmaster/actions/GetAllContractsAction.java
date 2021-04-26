@@ -10,27 +10,19 @@ import static com.github.hardlolmaster.controller.CommonResponseObject.SOMETHING
 import static com.github.hardlolmaster.utils.GetCommandGroupKey.getFor;
 
 @Component
-public class GetAllContractsAction extends AbstractAction {
+public class GetAllContractsAction extends AbstractAction
+{
     private final ContractRepository repository;
 
     @Autowired
-    public GetAllContractsAction(ContractRepository repository) {
+    public GetAllContractsAction(ContractRepository repository)
+    {
         this.repository = repository;
     }
 
     @Override
-    public ResponseObject<?> execute(Object input) {
-        return new HystrixCommand<ResponseObject<?>>(getFor("GetAllContracts")) {
-            @Override
-            protected ResponseObject<?> run() {
-                return new ResponseObject<>(true, repository.findAll());
-            }
-
-            @Override
-            protected ResponseObject<?> getFallback() {
-                return SOMETHING_WENT_WRONG;
-            }
-
-        }.execute();
+    public ResponseObject<?> execute(Object input)
+    {
+        return new ResponseObject<>(true, repository.findAll());
     }
 }

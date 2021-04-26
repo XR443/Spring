@@ -35,7 +35,7 @@ public class CalculatePropertyInsurancePremiumAction extends AbstractAction
     public ResponseObject<?> execute(Object input)
     {
         PropertyInsuranceContract contract = objectMapper.convertValue(input, PropertyInsuranceContract.class);
-        if(!validator.valid(contract))
+        if (!validator.valid(contract))
             return INCORRECT_INPUT;
         return new HystrixCommand<ResponseObject<?>>(getFor("CalculatePropertyInsurancePremium"))
         {

@@ -11,19 +11,18 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import static com.github.hardlolmaster.controller.CommonResponseObject.INCORRECT_INPUT;
-import static com.github.hardlolmaster.controller.CommonResponseObject.SOMETHING_WENT_WRONG;
 import static com.github.hardlolmaster.utils.GetCommandGroupKey.getFor;
 
 @Component
-public class SaveIndividualAction extends AbstractAction
+public class SaveIndividualNoDocAction extends AbstractAction
 {
     private final IndividualRepository repository;
     private final Validator validator;
     private final ObjectMapper objectMapper;
 
     @Autowired
-    public SaveIndividualAction(IndividualRepository repository,
-            @Qualifier("individualValidator") Validator validator,
+    public SaveIndividualNoDocAction(IndividualRepository repository,
+            @Qualifier("individualValidatorNoDocument") Validator validator,
             ObjectMapper objectMapper)
     {
         this.repository = repository;

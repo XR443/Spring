@@ -15,19 +15,22 @@ import static com.github.hardlolmaster.controller.CommonResponseObject.INCORRECT
 import static com.github.hardlolmaster.controller.CommonResponseObject.SOMETHING_WENT_WRONG;
 
 @Component
-public class GetContractByIdAction extends AbstractAction {
+public class GetContractByIdAction extends AbstractAction
+{
 
     private final ContractRepository contractRepository;
     private final ObjectMapper objectMapper;
 
     @Autowired
-    public GetContractByIdAction(ContractRepository contractRepository, ObjectMapper objectMapper) {
+    public GetContractByIdAction(ContractRepository contractRepository, ObjectMapper objectMapper)
+    {
         this.contractRepository = contractRepository;
         this.objectMapper = objectMapper;
     }
 
     @Override
-    public ResponseObject<?> execute(Object input) {
+    public ResponseObject<?> execute(Object input)
+    {
         if (input == null)
             return INCORRECT_INPUT;
         final Long id = objectMapper.convertValue(input, Long.class);
@@ -39,11 +42,6 @@ public class GetContractByIdAction extends AbstractAction {
                 if (byId.isEmpty())
                     return new ResponseObject<>(false, "Объект с таким id не найден");
                 return new ResponseObject<>(true, byId.get());
-            }
-
-            @Override
-            protected ResponseObject<?> getFallback() {
-                return SOMETHING_WENT_WRONG;
             }
         }.execute();
     }

@@ -18,15 +18,15 @@ public class PropertyInsuranceContract extends IdObject
 {
     private String number;
     private String comment;
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date insurancePeriodFrom;
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date insurancePeriodTo;
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date calculateDate;
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date conclusionDate;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
     private Individual insurer;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private PropertyInsuranceObject insuranceObject;

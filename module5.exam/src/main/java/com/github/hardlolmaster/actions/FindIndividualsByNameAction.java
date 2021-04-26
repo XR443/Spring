@@ -17,22 +17,25 @@ import static com.github.hardlolmaster.controller.CommonResponseObject.SOMETHING
 import static com.github.hardlolmaster.utils.GetCommandGroupKey.getFor;
 
 @Component
-public class FindIndividualsByNameAction extends AbstractAction {
+public class FindIndividualsByNameAction extends AbstractAction
+{
     private final IndividualRepository repository;
     private final ObjectMapper objectMapper;
     private final Validator validator;
 
     @Autowired
     public FindIndividualsByNameAction(IndividualRepository repository,
-                                       ObjectMapper objectMapper,
-                                       @Qualifier("findIndividualValidator") Validator validator) {
+            ObjectMapper objectMapper,
+            @Qualifier("findIndividualValidator") Validator validator)
+    {
         this.repository = repository;
         this.objectMapper = objectMapper;
         this.validator = validator;
     }
 
     @Override
-    public ResponseObject<?> execute(Object input) {
+    public ResponseObject<?> execute(Object input)
+    {
         Individual individual = objectMapper.convertValue(input, Individual.class);
         if (!validator.valid(individual))
             return INCORRECT_INPUT;

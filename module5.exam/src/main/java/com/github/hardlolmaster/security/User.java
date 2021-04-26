@@ -19,6 +19,6 @@ public class User extends IdObject {
     @ToString.Exclude
     private String password;
     private String username;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private List<Role> roles;
 }
