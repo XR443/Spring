@@ -1,17 +1,16 @@
 package com.github.hardlolmaster.domain;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-public class PropertyInsuranceObject extends IdObject {
+public class PropertyInsuranceObject
+{
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
     private Double insuranceSum;
     private Double insurancePremium;
     private Long constructionYear;

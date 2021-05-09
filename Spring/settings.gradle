@@ -60,3 +60,7 @@ project(':module4:module4.homework7').name = 'module4.homework7'
 include 'module5:exam'
 project(':module5:exam').projectDir = new File('../module5.exam')
 project(':module5:exam').name = 'exam'
+
+include 'dockerfiles'
+project(':dockerfiles').projectDir = new File('../dockerfiles')
+project(':dockerfiles').name = 'dockerfiles'

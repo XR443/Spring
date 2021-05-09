@@ -39,27 +39,36 @@ public class UserDetailsService implements org.springframework.security.core.use
         admin.setPassword(passwordEncoder.encode("admin"));
         Role adminRole = new Role();
         adminRole.setName("ADMIN");
-        roleRepository.save(adminRole);
+        Role byNameAdmin = roleRepository.findByName(adminRole.getName());
+        if (byNameAdmin == null)
+            roleRepository.save(adminRole);
         admin.setRoles(Arrays.asList(adminRole));
 
-        userRepository.save(admin);
+        User adminDb = userRepository.findByUsername(admin.getUsername());
+        if (adminDb == null)
+            userRepository.save(admin);
 
         User manager1 = new User();
         manager1.setUsername("manager1");
         manager1.setPassword(passwordEncoder.encode("manager1"));
         Role managerRole = new Role();
         managerRole.setName("MANAGER");
-        roleRepository.save(managerRole);
+        Role byNameManager = roleRepository.findByName(managerRole.getName());
+        if (byNameManager == null)
+            roleRepository.save(managerRole);
         manager1.setRoles(Arrays.asList(managerRole));
 
-        userRepository.save(manager1);
+        User manager1Db = userRepository.findByUsername(manager1.getUsername());
+        if (manager1Db == null)
+            userRepository.save(manager1);
 
         User manager2 = new User();
         manager2.setUsername("manager2");
         manager2.setPassword(passwordEncoder.encode("manager2"));
         manager2.setRoles(Arrays.asList(managerRole));
-
-        userRepository.save(manager2);
+        User manager2Db = userRepository.findByUsername(manager2.getUsername());
+        if (manager2Db == null)
+            userRepository.save(manager2);
     }
 
     @Override

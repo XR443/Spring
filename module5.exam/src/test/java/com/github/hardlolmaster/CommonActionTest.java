@@ -164,13 +164,19 @@ public class CommonActionTest
 
         Sid owner = new PrincipalSid(auth);
         Sid role_user = new GrantedAuthoritySid("ROLE_USER");
-        ObjectIdentity oid = new ObjectIdentityImpl(PropertyInsuranceContract.class,
-                save.getId());
-        MutableAcl acl = aclService.createAcl(oid);
-        acl.setOwner(owner);
-        acl.insertAce(acl.getEntries().size(), BasePermission.READ, role_user, true);
-        acl.insertAce(acl.getEntries().size(), BasePermission.ADMINISTRATION, role_user, true);
-        aclService.updateAcl(acl);
+        ObjectIdentity oid = new ObjectIdentityImpl(save);
+        try
+        {
+            MutableAcl acl = aclService.createAcl(oid);
+            acl.setOwner(owner);
+            acl.insertAce(acl.getEntries().size(), BasePermission.READ, role_user, true);
+            acl.insertAce(acl.getEntries().size(), BasePermission.ADMINISTRATION, role_user, true);
+            aclService.updateAcl(acl);
+        }
+        catch (AlreadyExistsException alreadyExistsException)
+        {
+            alreadyExistsException.printStackTrace();
+        }
         return save;
     }
 
@@ -182,7 +188,7 @@ public class CommonActionTest
     @Transactional
     public void testSaveContractAction()
     {
-//        PropertyInsuranceContract contract = savePropertyInsuranceContract();
+        //        PropertyInsuranceContract contract = savePropertyInsuranceContract();
         PropertyInsuranceContract contract = new PropertyInsuranceContract();
         contract.setInsurancePeriodFrom(getDate(2021, 1, 1));
         contract.setInsurancePeriodTo(getDate(2022, 2, 2));
@@ -216,8 +222,8 @@ public class CommonActionTest
         address.setStreet("Street");
         insuranceObject.setAddress(address);
         contract.setInsuranceObject(insuranceObject);
-//        contractRepository.save(contract);
-                ResponseObject<?> execute = saveContractAction.execute(contract);
+        //        contractRepository.save(contract);
+        ResponseObject<?> execute = saveContractAction.execute(contract);
 
         //        assertNotNull(execute);
         //        assertTrue(execute.isOk());

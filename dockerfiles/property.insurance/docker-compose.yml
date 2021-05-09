@@ -1,0 +1,25 @@
+version: "2.1"
+services:
+  db:
+    image: mariadb:10.3
+    volumes:
+      - ./database:/data
+      - ./mariadb.cnf:/etc/mysql/conf.d/custom.cnf
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: property.insurance
+  back:
+    # replace imageName with your image name (block in your case)
+    image: hardlolmaster/property.insurance.test:latest
+    ports:
+      - 8080:8080 # Replace the port of your application here if used
+    depends_on:
+      - db
+#  web:
+#    image: hardlolmaster/property.insurance.test.angular:latest
+#    ports:
+#      - 80:80 # Replace the port of your application here if used
+#    depends_on:
+#      - back

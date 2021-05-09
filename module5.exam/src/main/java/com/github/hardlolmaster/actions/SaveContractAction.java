@@ -56,6 +56,9 @@ public class SaveContractAction extends AbstractAction
         if ((contract.getId() == null && !contractRepository.existsByNumber(contract.getNumber())))
             save = contractRepository.save(contract);
 
+        if ((contract.getId() == null && contractRepository.existsByNumber(contract.getNumber())))
+            throw new RuntimeException("Contract with number " + contract.getNumber() + " already existing");
+
         Optional<PropertyInsuranceContract> byId = contractRepository.findById(contract.getId());
         if (byId.isEmpty())
             throw new RuntimeException("Contract with id " + contract.getId() + " not existing");
@@ -85,7 +88,7 @@ public class SaveContractAction extends AbstractAction
         }
         catch (AlreadyExistsException alreadyExistsException)
         {
-            alreadyExistsException.printStackTrace();
+//            alreadyExistsException.printStackTrace();
         }
 
         return new ResponseObject<>(true, save);

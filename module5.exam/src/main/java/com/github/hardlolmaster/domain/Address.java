@@ -1,15 +1,18 @@
 package com.github.hardlolmaster.domain;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-public class Address extends IdObject {
+public class Address
+{
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
     private String country;
+    @Column(name = "post_index")
     private String index;
     private String district;
     private String region;

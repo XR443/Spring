@@ -1,6 +1,6 @@
 create table acl_sid
 (
-    id        bigserial    not null primary key,
+    id        bigint    not null primary key,
     principal boolean      not null,
     sid       varchar(100) not null,
     constraint unique_uk_1 unique (sid, principal)
@@ -8,14 +8,14 @@ create table acl_sid
 
 create table acl_class
 (
-    id    bigserial    not null primary key,
+    id    bigint    not null primary key,
     class varchar(100) not null,
     constraint unique_uk_2 unique (class)
 );
 
 create table acl_object_identity
 (
-    id                 bigserial primary key,
+    id                 bigint primary key,
     object_id_class    bigint  not null,
     object_id_identity bigint  not null,
     parent_object      bigint,
@@ -29,7 +29,7 @@ create table acl_object_identity
 
 create table acl_entry
 (
-    id                  bigserial primary key,
+    id                  bigint primary key,
     acl_object_identity bigint  not null,
     ace_order           int     not null,
     sid                 bigint  not null,
