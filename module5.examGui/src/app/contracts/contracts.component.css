@@ -1,0 +1,21 @@
+.table td {
+  text-align: center;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.table tr {
+  text-align: center;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.table tr:hover {
+  background-color: #323232;
+}
+
+.highlighted {
+  background-color: #214283;
+}

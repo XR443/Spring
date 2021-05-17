@@ -11,8 +11,10 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: property.insurance
   back:
+    build:
+      context: ./../../module5.exam
     # replace imageName with your image name (block in your case)
-    image: hardlolmaster/property.insurance.test:latest
+#    image: hardlolmaster/property.insurance.test:latest
     ports:
       - 8080:8080 # Replace the port of your application here if used
     depends_on:

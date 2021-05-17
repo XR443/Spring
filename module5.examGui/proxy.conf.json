@@ -1,0 +1,6 @@
+{
+  "/property.insurance": {
+    "target": "http://back:8080",
+    "secure": false
+  }
+}

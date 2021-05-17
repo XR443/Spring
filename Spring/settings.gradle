@@ -61,6 +61,10 @@ include 'module5:exam'
 project(':module5:exam').projectDir = new File('../module5.exam')
 project(':module5:exam').name = 'exam'
 
+include 'module5:examGui'
+project(':module5:examGui').projectDir = new File('../module5.examGui')
+project(':module5:examGui').name = 'examGui'
+
 include 'dockerfiles'
 project(':dockerfiles').projectDir = new File('../dockerfiles')
 project(':dockerfiles').name = 'dockerfiles'

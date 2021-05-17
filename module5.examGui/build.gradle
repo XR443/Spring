@@ -1,0 +1,15 @@
+plugins {
+  id 'java'
+  id "com.moowork.node" version "1.3.1"
+}
+
+node {
+  version = '12.16.1'
+  npmVersion = '6.13.4'
+  download = false
+}
+
+tasks.register("buildGui", Jar) {
+  it.dependsOn 'npm_run_build'
+  it.from 'dist/SpringExam' into 'public'
+}

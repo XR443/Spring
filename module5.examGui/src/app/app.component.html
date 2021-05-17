@@ -1,0 +1,15 @@
+<!-- nav -->
+<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="principal">
+  <div class="navbar-nav">
+    <a class="nav-item nav-link" routerLink="/">Contracts</a>
+    <a class="nav-item nav-link" (click)="createNewContract()">Create new contract</a>
+    <a class="nav-item nav-link" (click)="openContract()">Open contract</a>
+    <a class="nav-item nav-link" (click)="logout()">Logout</a>
+  </div>
+</nav>
+
+<!-- main app container -->
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+

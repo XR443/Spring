@@ -1,0 +1,217 @@
+<div class="card">
+  <div class="card-body bg-dark">
+    <form class="pl-5 text-light" [formGroup]="calcForm">
+      <fieldset>
+        <legend>Рассчет</legend>
+
+        <div class="form-group row">
+          <label for="insuranceSum" class="col-0 col-form-label pl-3">Страховая сумма</label>
+          <div class="col-3">
+            <input id="insuranceSum" type="text" formControlName="insuranceSum" class="form-control"
+                   [allowNegativeNumbers]="false" mask="separator.2">
+          </div>
+          <label for="insurancePeriodFrom" class="col-0 col-form-label pl-5 pr-2">Срок действия с</label>
+          <div class="">
+            <input id="insurancePeriodFrom" type="date" formControlName="insurancePeriodFrom" class="form-control">
+          </div>
+          <label for="insurancePeriodTo" class="col-0 col-form-label p-2">по</label>
+          <div class="">
+            <input id="insurancePeriodTo" type="date" formControlName="insurancePeriodTo" class="form-control">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="propertyType" class="col-0 col-form-label">Тип недвижимости</label>
+          <div class="col-3">
+            <select id="propertyType" class="form-control" formControlName="propertyType">
+              <option>Квартира</option>
+              <option>Дом</option>
+              <option>Комната</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="constructionYear" class="col-0 col-form-label pl-4">Год постройки</label>
+          <div class="col-3 pl-4 pr-2">
+            <select id="constructionYear" class="form-control" formControlName="constructionYear">
+              <ng-container *ngFor="let year of availableYears">
+                <option [ngValue]="year" name="selectedYear">{{year}}</option>
+              </ng-container>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="area" class="col-0 col-form-label pl-4">Площадь, кв.м.</label>
+          <div class="col-3 pl-4 pr-2">
+            <input id="area" type="text" formControlName="area" class="form-control"
+                   [allowNegativeNumbers]="false" mask="separator.1">
+          </div>
+        </div>
+
+        <div class="form-group row justify-content-center">
+          <button class="btn btn-info" (click)="calculate()">Рассчитать</button>
+        </div>
+
+      </fieldset>
+    </form>
+    <form class="pl-5 text-light" [formGroup]="afterCalcForm">
+      <div class="form-group row justify-content-center">
+        <label for="calculateDate" class="col-0 col-form-label pr-3">Дата расчета</label>
+        <div class="">
+          <input id="calculateDate" type="date" formControlName="calculateDate" class="form-control" disabled>
+        </div>
+        <label for="premium" class="col-0 col-form-label pl-5">Премия</label>
+        <div class="col-2">
+          <input id="premium" type="number" formControlName="premium" class="form-control" disabled>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body bg-dark">
+    <form [formGroup]="contractInfo">
+      <div class="text-light">
+        <div class="form-group row">
+          <label for="contractNumber" class="pl-5 col-form-label">№ договора</label>
+          <div class="col-2">
+            <input id="contractNumber" type="text" formControlName="contractNumber" class="form-control">
+          </div>
+          <label for="conclusionDate" class="col-2 col-form-label">Дата заключения</label>
+          <div class="row-cols-1">
+            <input id="conclusionDate" type="date" formControlName="conclusionDate" class="form-control" disabled>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body bg-dark">
+    <form class="pl-5 text-light" [formGroup]="insurerForm">
+      <fieldset>
+        <legend>Страхователь</legend>
+
+        <div class="form-group row">
+          <button class="btn btn-info" (click)="openChooseInsurerWindow()">Выбрать</button>
+          <label for="fio" class="col-form-label pl-3">ФИО</label>
+          <div class="col-9">
+            <input id="fio" type="text" formControlName="fio" class="form-control" disabled>
+          </div>
+          <button class="btn btn-info" [disabled]="!contract?.insurer?.id" (click)="updateInsurer()">Изменить</button>
+        </div>
+
+        <div class="form-group row">
+          <label for="birthday" class="col-2 col-form-label">Дата рождения</label>
+          <div class="row-cols-1">
+            <input id="birthday" type="date" formControlName="birthday" class="form-control" disabled>
+          </div>
+          <!--          <div class="col-1">&nbsp;</div>-->
+          <label class="col-0 col-form-label pl-5">Паспорт</label>
+          <label for="series" class="col-0 col-form-label pl-3">Серия</label>
+          <div class="col-2">
+            <input id="series" type="text" formControlName="series" class="form-control" disabled>
+          </div>
+          <label for="number" class="col-form-label">№</label>
+          <div class="col-2">
+            <input id="number" type="text" formControlName="number" class="form-control" disabled>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body bg-dark">
+    <form class="pl-5 text-light" [formGroup]="propertyForm">
+      <fieldset>
+        <legend>Адрес имущества</legend>
+
+        <div class="form-group d-flex justify-content-around">
+          <div class="p-2">
+            <input id="country" type="text" formControlName="country" class="form-control">
+            <label for="country" class="col-0 col-form-label pl-3">государство</label>
+          </div>
+          <div class="p-2">
+            <input id="index" type="text" formControlName="index" class="form-control">
+            <label for="index" class="col-0 col-form-label pl-3">индекс</label>
+          </div>
+          <div class="p-2 w-50">
+            <input id="region" type="text" formControlName="region" class="form-control">
+            <label for="region" class="col-0 col-form-label pl-3">республика, край, область</label>
+          </div>
+          <div class="p-2 w-50">
+            <input id="district" type="text" formControlName="district" class="form-control">
+            <label for="district" class="col-0 col-form-label pl-3">район</label>
+          </div>
+        </div>
+
+        <div class="form-group d-flex justify-content-around">
+          <div class="p-2 w-50">
+            <input id="city" type="text" formControlName="city" class="form-control">
+            <label for="city" class="col-0 col-form-label pl-3">населенный пункт</label>
+          </div>
+          <div class="p-2 w-75">
+            <input id="street" type="text" formControlName="street" class="form-control">
+            <label for="street" class="col-0 col-form-label pl-3">улица</label>
+          </div>
+          <div class="p-2">
+            <input id="house" type="text" formControlName="house" class="form-control">
+            <label for="house" class="col-0 col-form-label pl-3">дом</label>
+          </div>
+          <div class="p-2">
+            <input id="housing" type="text" formControlName="housing" class="form-control">
+            <label for="housing" class="col-0 col-form-label pl-3">корпус</label>
+          </div>
+          <div class="p-2">
+            <input id="building" type="text" formControlName="building" class="form-control">
+            <label for="building" class="col-0 col-form-label pl-3">строение</label>
+          </div>
+          <div class="p-2">
+            <input id="apartment" type="text" formControlName="apartment" class="form-control">
+            <label for="apartment" class="col-0 col-form-label pl-3">квартира</label>
+          </div>
+        </div>
+
+      </fieldset>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body bg-dark">
+    <form class="pl-5 text-light" [formGroup]="commentForm">
+      <fieldset>
+        <legend>Комментарий</legend>
+        <div class="form-group row">
+          <label for="comment" class="col-0 col-form-label pl-3">Комментарий к договору (не печатается на
+            полисе)</label>
+          <div class="col-12">
+          <textarea id="comment"
+                    type="text"
+                    formControlName="comment"
+                    class="form-control"></textarea>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body bg-dark">
+    <div class="form-group row justify-content-around">
+      <div class="col-3 pl-3 pr-3">
+        <button class="btn btn-info" (click)="save()" [disabled]="!allFormsValid()">Сохранить</button>
+      </div>
+      <div class="col-3 pl-3 pr-3">
+        <button class="btn btn-info" (click)="toContracts()">К списку договоров</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<table class="table bg-dark">
+  <thead class="thead-dark">
+  <tr>
+    <th>Серия-Номер</th>
+    <th>Дата заключения</th>
+    <th>Страхователь</th>
+    <th>Премия</th>
+    <th>Срок действия</th>
+  </tr>
+  </thead>
+  <tbody>
+
+  <tr *ngIf="loading" class="text-light">
+    <td class="align-items-center">
+      <strong>Loading...</strong>
+    </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>
+      <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+    </td>
+  </tr>
+
+  <tr class="text-light" *ngFor="let contract of contracts" (dblclick)="openByDblclick(contract)"
+      (click)="select(contract)"
+      [class.highlighted]="highlight(contract)">
+    <td>{{contract.number}}</td>
+    <td>{{contract.calculateDate | date: "dd.MM.yyyy"}}</td>
+    <td>{{contract.insurer?.firstName}} {{contract.insurer?.lastName}} {{contract.insurer?.secondName}}</td>
+    <td>{{contract.insuranceObject?.insurancePremium | number: "1.2"}}</td>
+    <td>{{contract.insurancePeriodFrom| date: "dd.MM.yyyy"}}-
+      {{contract.insurancePeriodTo| date: "dd.MM.yyyy"}}</td>
+  </tr>
+  </tbody>
+</table>

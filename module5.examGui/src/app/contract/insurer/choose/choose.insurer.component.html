@@ -1,0 +1,60 @@
+<div class="card">
+  <div class="card-body bg-dark">
+    <form class="text-light" [formGroup]="insurerForm">
+      <fieldset>
+        <legend>Выбор клиентов</legend>
+        <div class="form-group row">
+          <label class="col-0 col-form-label pl-4">ФИО</label>
+          <div class="col-3">
+            <input id="lastName" type="text" formControlName="lastName" class="form-control">
+            <label for="lastName" class="col-0 col-form-label pl-3">(фамилия)</label>
+          </div>
+          <div class="col-3">
+            <input id="firstName" type="text" formControlName="firstName" class="form-control">
+            <label for="firstName" class="col-0 col-form-label pl-3">(имя)</label>
+          </div>
+          <div class="col-3">
+            <input id="secondName" type="text" formControlName="secondName" class="form-control">
+            <label for="secondName" class="col-0 col-form-label pl-3">(отчество)</label>
+          </div>
+          <div class="col-1">
+            <button class="btn btn-info" (click)="find()" [disabled]="!insurerForm.valid">Найти</button>
+          </div>
+        </div>
+
+        <table *ngIf="insurers.length!==0" class="table bg-dark">
+          <thead class="thead-dark">
+          <tr>
+            <th>ФИО</th>
+            <th>Дата рождения</th>
+            <th>Паспортные данные</th>
+          </tr>
+          </thead>
+          <tbody>
+
+          <tr class="text-light" *ngFor="let insurer of insurers"
+              (click)="select(insurer)"
+              (dblclick)="closeAndSelect()"
+              [class.highlighted]="highlight(insurer)">
+            <td>{{insurer.firstName}} {{insurer.lastName}} {{insurer.secondName}}</td>
+            <td>{{insurer.birthday | date: "dd.MM.yyyy"}}</td>
+            <td>{{insurer.document?.series}} {{insurer.document?.number}}</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <div class="form-group row justify-content-around">
+          <div class="col-1 pl-3 pr-3">
+            <button class="btn btn-info" (click)="closeAndSelect()" [disabled]="insurers.length===0 || !selected">Выбрать</button>
+          </div>
+          <div class="col-1 pl-3 pr-3">
+            <button class="btn btn-info" (click)="createNewInsurer()">Новый</button>
+          </div>
+          <div class="col-1 pl-3 pr-3">
+            <button class="btn btn-info" (click)="onCloseClick()">Закрыть</button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
